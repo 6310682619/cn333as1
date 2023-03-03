@@ -7,4 +7,4 @@
 - 6310682619 เขมิกา วีรกุลวัฒนา
 - 6310682783 กันตพัฒน์ โควาดิสัย
 
-- link demo https://youtu.be/I5fN70FrR7o
+link demo https://youtu.be/I5fN70FrR7o
