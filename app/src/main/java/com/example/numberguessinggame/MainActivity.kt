@@ -37,34 +37,35 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+var numTries : Int = 0
+private fun guessNumber(input: Int, random: Int): String {
+    numTries++
+    if(input < random) {
+        return if ((random - input) < 10){
+            "So close! Your number is too low."
+        }else{
+            "Your number is too low."
+        }
+    } else if (input > random) {
+        return if ((input - random) < 10){
+            "So close! Your number is too high."
+        }else{
+            "Your number is too high."
+        }
+    }
+    return "Congratulations!\nYou found the number in $numTries attempts."
+}
 
 @Composable
 fun NumberGuessingGameScreen() {
     var random by remember { mutableStateOf((1..1000).random()) }
     var getNumber by remember { mutableStateOf("") }
-    var numTries by remember { mutableStateOf(0) }
     val input = getNumber.toIntOrNull()
     var hint by remember { mutableStateOf("") }
 
-    fun guessNumber(input: Int, random: Int): String {
-        if(input < random) {
-            return if ((random - input) < 10){
-                "So close! Your number is too low."
-            }else{
-                "Your number is too low."
-            }
-        } else if (input > random) {
-            return if ((input - random) < 10){
-                "So close! Your number is too high."
-            }else{
-                "Your number is too high."
-            }
-        }
-        return "Congratulations!\nYou found the number in $numTries attempts."
-    }
-
     Column(
         modifier = Modifier.padding(32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         Spacer(Modifier.height(16.dp))
@@ -73,7 +74,7 @@ fun NumberGuessingGameScreen() {
             fontSize = 20.sp,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(100.dp))
         EditNumberField(
             value = getNumber,
             onValueChange = { getNumber = it }
@@ -89,7 +90,6 @@ fun NumberGuessingGameScreen() {
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 if (input != null) {
-                    numTries++
                     hint = guessNumber(input, random)
                 }
             }) {
